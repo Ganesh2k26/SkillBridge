@@ -28,26 +28,35 @@ public class DataSeeder implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         if (!seedData) return;
-        if (companyRepo.count() > 0) {
-            log.info("✅ Data already seeded. Skipping.");
-            return;
+        if (companyRepo.count() == 0) {
+            log.info("🌱 Seeding companies and questions...");
+            seedCompaniesAndQuestions();
+        } else {
+            log.info("✅ Companies already seeded.");
         }
-        log.info("🌱 Seeding companies and questions...");
-        seedCompaniesAndQuestions();
         seedAdminUser();
         log.info("✅ Seeding complete.");
     }
 
     private void seedAdminUser() {
-        if (!userRepo.existsByEmail("admin@skillbridge.dev")) {
+        final String adminEmail = "admin@skillbridge.dev";
+        userRepo.findByEmailIgnoreCase(adminEmail).ifPresentOrElse(admin -> {
+            if (!passwordEncoder.matches("admin123", admin.getPassword())) {
+                admin.setPassword(passwordEncoder.encode("admin123"));
+                userRepo.save(admin);
+                log.info("👤 Admin password reset: {} / admin123", adminEmail);
+            } else {
+                log.info("👤 Admin user ready: {} / admin123", adminEmail);
+            }
+        }, () -> {
             userRepo.save(User.builder()
                 .name("Admin")
-                .email("admin@skillbridge.dev")
+                .email(adminEmail)
                 .password(passwordEncoder.encode("admin123"))
                 .role("ADMIN")
                 .build());
-            log.info("👤 Admin user created: admin@skillbridge.dev / admin123");
-        }
+            log.info("👤 Admin user created: {} / admin123", adminEmail);
+        });
     }
 
     private void seedCompaniesAndQuestions() {

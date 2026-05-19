@@ -11,9 +11,14 @@ API.interceptors.request.use(config => {
 API.interceptors.response.use(
   res => res,
   err => {
-    if (err.response?.status === 401) {
+    const url = err.config?.url || '';
+    const isAuthRoute = url.includes('/auth/login') || url.includes('/auth/register');
+
+    if (err.response?.status === 401 && !isAuthRoute) {
       localStorage.clear();
-      window.location.href = '/login';
+      if (!window.location.pathname.startsWith('/login')) {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(err);
   }

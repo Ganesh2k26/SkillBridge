@@ -25,12 +25,13 @@ public class AuthService {
     private final JwtService jwtService;
 
     public AuthResponse register(RegisterRequest req) {
-        if (userRepo.existsByEmail(req.getEmail()))
+        String email = normalizeEmail(req.getEmail());
+        if (userRepo.existsByEmailIgnoreCase(email))
             throw new IllegalArgumentException("Email already registered");
 
         User user = User.builder()
-            .name(req.getName())
-            .email(req.getEmail())
+            .name(req.getName().trim())
+            .email(email)
             .password(encoder.encode(req.getPassword()))
             .collegeName(req.getCollegeName())
             .graduationYear(req.getGraduationYear())
@@ -52,7 +53,7 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest req) {
-        User user = userRepo.findByEmail(req.getEmail())
+        User user = userRepo.findByEmailIgnoreCase(normalizeEmail(req.getEmail()))
             .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
         if (!encoder.matches(req.getPassword(), user.getPassword())) {
@@ -74,7 +75,11 @@ public class AuthService {
     }
 
     public User getByEmail(String email) {
-        return userRepo.findByEmail(email)
+        return userRepo.findByEmailIgnoreCase(normalizeEmail(email))
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    private static String normalizeEmail(String email) {
+        return email == null ? "" : email.trim().toLowerCase();
     }
 }

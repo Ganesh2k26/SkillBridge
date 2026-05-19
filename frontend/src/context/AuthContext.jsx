@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const persist = (data) => {
+    if (!data?.token) throw new Error('No token received from server');
     localStorage.setItem('sb_token', data.token);
     const u = { name: data.name, email: data.email, role: data.role, targetCompany: data.targetCompany };
     localStorage.setItem('sb_user', JSON.stringify(u));
@@ -22,9 +23,32 @@ export function AuthProvider({ children }) {
     return u;
   };
 
-  const login    = async (email, password) => persist((await API.post('/auth/login',    { email, password })).data);
-  const register = async (payload)         => persist((await API.post('/auth/register', payload)).data);
-  const logout   = useCallback(() => { localStorage.clear(); setUser(null); }, []);
+  const login = async (email, password) => {
+    localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_user');
+    const res = await API.post('/auth/login', {
+      email: email.trim().toLowerCase(),
+      password,
+    });
+    return persist(res.data);
+  };
+
+  const register = async (payload) => {
+    localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_user');
+    const body = {
+      ...payload,
+      name: payload.name?.trim(),
+      email: payload.email?.trim().toLowerCase(),
+      targetCompany: payload.targetCompany || null,
+      collegeName: payload.collegeName || null,
+      graduationYear: payload.graduationYear || null,
+    };
+    const res = await API.post('/auth/register', body);
+    return persist(res.data);
+  };
+
+  const logout = useCallback(() => { localStorage.clear(); setUser(null); }, []);
 
   return <Ctx.Provider value={{ user, loading, login, register, logout }}>{children}</Ctx.Provider>;
 }

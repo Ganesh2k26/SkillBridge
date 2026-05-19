@@ -33,6 +33,7 @@ public class GlobalExceptionHandler {
         body.put("status", 400);
         body.put("error", "Validation Failed");
         body.put("fieldErrors", fieldErrors);
+        body.put("message", String.join("; ", fieldErrors.values()));
         return ResponseEntity.badRequest().body(body);
     }
 

@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff, Target, LogIn } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Spinner } from '../components/SharedComponents';
+import { getApiErrorMessage } from '../utils/apiError';
 
 export function Login() {
   const { login } = useAuth();
@@ -22,7 +23,7 @@ export function Login() {
       toast.success('Welcome back! 🎯');
       nav('/dashboard');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Login failed');
+      toast.error(getApiErrorMessage(err, 'Login failed'));
     } finally { setBusy(false); }
   };
 
@@ -97,7 +98,7 @@ export function Register() {
       toast.success('Account created! Welcome to SkillBridge 🎉');
       nav('/dashboard');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registration failed');
+      toast.error(getApiErrorMessage(err, 'Registration failed'));
     } finally { setBusy(false); }
   };
 
