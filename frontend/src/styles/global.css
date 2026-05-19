@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-gray-950 text-gray-100 font-sans antialiased; min-height: 100vh; }
+  ::selection { @apply bg-brand-500/40 text-white; }
+}
+
+@layer components {
+  /* Buttons */
+  .btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-950 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97]; }
+  .btn-primary { @apply btn bg-brand-500 hover:bg-brand-600 text-white shadow-glow-sm hover:shadow-glow focus:ring-brand-500 px-5 py-2.5; }
+  .btn-secondary { @apply btn bg-gray-800 hover:bg-gray-700 text-gray-100 border border-gray-700 focus:ring-gray-600 px-5 py-2.5; }
+  .btn-ghost { @apply btn hover:bg-gray-800 text-gray-400 hover:text-gray-100 px-3 py-2; }
+  .btn-danger { @apply btn bg-danger-500/10 hover:bg-danger-500/20 text-danger-400 border border-danger-500/20 px-5 py-2.5; }
+  .btn-success { @apply btn bg-success-500/10 hover:bg-success-500/20 text-success-400 border border-success-500/20 px-5 py-2.5; }
+  .btn-sm { @apply px-3.5 py-1.5 text-sm; }
+  .btn-lg { @apply px-7 py-3.5 text-base; }
+
+  /* Cards */
+  .card { @apply bg-gray-900 border border-gray-800 rounded-2xl shadow-card; }
+  .card-hover { @apply card transition-all duration-300 hover:border-gray-700 hover:shadow-glow-sm hover:-translate-y-0.5; }
+  .card-glass { @apply rounded-2xl border border-white/5 shadow-card; background: rgba(17,24,39,0.7); backdrop-filter: blur(16px); }
+
+  /* Inputs */
+  .input { @apply w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors duration-150; }
+  .label { @apply block text-sm font-medium text-gray-300 mb-1.5; }
+
+  /* Badges */
+  .badge { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold; }
+  .badge-easy   { @apply bg-success-500/15 text-success-400 border border-success-500/20; }
+  .badge-medium { @apply bg-warning-500/15 text-warning-400 border border-warning-500/20; }
+  .badge-hard   { @apply bg-danger-500/15  text-danger-400  border border-danger-500/20;  }
+  .badge-brand  { @apply bg-brand-500/15   text-brand-400   border border-brand-500/20;   }
+  .badge-gray   { @apply bg-gray-700/50    text-gray-400    border border-gray-700;        }
+
+  /* Section title */
+  .section-title { @apply text-2xl font-bold text-white; }
+  .section-sub   { @apply text-gray-400 text-sm mt-1; }
+
+  /* Gradient text */
+  .text-gradient { @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-purple-400 to-success-400; }
+
+  /* Sidebar nav item */
+  .nav-item { @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 cursor-pointer; }
+  .nav-item-active { @apply bg-brand-500/15 text-brand-400 border border-brand-500/20; }
+  .nav-item-idle   { @apply text-gray-400 hover:text-gray-100 hover:bg-gray-800; }
+
+  /* Stat card */
+  .stat-card { @apply card p-5 flex flex-col gap-2; }
+
+  /* Strength pill */
+  .pill-weak   { @apply badge bg-danger-500/10  text-danger-400  border-danger-500/20; }
+  .pill-medium { @apply badge bg-warning-500/10 text-warning-400 border-warning-500/20; }
+  .pill-strong { @apply badge bg-success-500/10 text-success-400 border-success-500/20; }
+
+  /* Shimmer loader */
+  .shimmer { @apply animate-shimmer rounded-xl; background: linear-gradient(90deg,#1f2937 25%,#374151 50%,#1f2937 75%); background-size: 1000px 100%; }
+}
+
+@layer utilities {
+  .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+  .scrollbar-hide::-webkit-scrollbar { display:none; }
+}
+
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:#030712; }
+::-webkit-scrollbar-thumb { background:#1f2937; border-radius:9999px; }
+::-webkit-scrollbar-thumb:hover { background:#374151; }
