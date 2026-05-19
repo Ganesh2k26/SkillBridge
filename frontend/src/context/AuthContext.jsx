@@ -27,8 +27,8 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('sb_token');
     localStorage.removeItem('sb_user');
     const res = await API.post('/auth/login', {
-      email: email.trim().toLowerCase(),
-      password,
+      email: String(email).trim().toLowerCase(),
+      password: String(password).trim(),
     });
     return persist(res.data);
   };

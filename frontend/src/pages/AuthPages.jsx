@@ -1,18 +1,26 @@
 // Login.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff, Target, LogIn } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Spinner } from '../components/SharedComponents';
 import { getApiErrorMessage } from '../utils/apiError';
+import API from '../api/axiosConfig';
 
 export function Login() {
   const { login } = useAuth();
   const nav = useNavigate();
-  const [form, setForm] = useState({ email:'', password:'' });
+  const [form, setForm] = useState({ email:'admin@skillbridge.dev', password:'admin123' });
   const [show, setShow]   = useState(false);
   const [busy, setBusy]   = useState(false);
+  const [apiUp, setApiUp] = useState(null);
+
+  useEffect(() => {
+    API.get('/auth/health')
+      .then(() => setApiUp(true))
+      .catch(() => setApiUp(false));
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -66,10 +74,19 @@ export function Login() {
             <Link to="/register" className="text-brand-400 hover:text-brand-300 font-medium">Create account</Link>
           </p>
 
-          {/* Demo hint */}
-          <div className="mt-4 p-3 rounded-xl bg-gray-800/60 border border-gray-700">
+          <div className="mt-4 p-3 rounded-xl bg-gray-800/60 border border-gray-700 space-y-2">
+            <p className="text-xs text-center">
+              Backend:{' '}
+              {apiUp === null && <span className="text-gray-500">checking...</span>}
+              {apiUp === true && <span className="text-success-400 font-medium">connected</span>}
+              {apiUp === false && (
+                <span className="text-danger-400 font-medium">
+                  offline — run .\scripts\start-backend.ps1
+                </span>
+              )}
+            </p>
             <p className="text-xs text-gray-500 text-center">
-              Admin demo: <span className="text-brand-400">admin@skillbridge.dev</span> / <span className="text-brand-400">admin123</span>
+              Demo: <span className="text-brand-400">admin@skillbridge.dev</span> / <span className="text-brand-400">admin123</span>
             </p>
           </div>
         </div>

@@ -8,6 +8,8 @@ export function getApiErrorMessage(err, fallback = 'Request failed') {
   if (data?.fieldErrors && typeof data.fieldErrors === 'object') {
     return Object.values(data.fieldErrors).join('; ');
   }
-  if (typeof data?.error === 'string') return data.error;
+  if (typeof data?.error === 'string' && data.error !== 'Forbidden') return data.error;
+  if (err.response?.status === 403) return 'Access denied. Check that the backend is running.';
+  if (err.response?.status === 401) return 'Invalid email or password.';
   return fallback;
 }
