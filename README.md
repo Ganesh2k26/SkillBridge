@@ -392,3 +392,15 @@ Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Screenshots
+<img width="1911" height="1079" alt="Screenshot 2026-05-19 164527" src="https://github.com/user-attachments/assets/76e5ba1d-f25f-4c6a-8b33-25917d58bab9" />
+<img width="1914" height="1075" alt="Screenshot 2026-05-19 164928" src="https://github.com/user-attachments/assets/2cc051e5-a73c-4e87-9a1b-5c8703961952" />
+<img width="1916" height="1077" alt="Screenshot 2026-05-19 164938" src="https://github.com/user-attachments/assets/bda15b00-8a07-41ea-9a69-0846d569ae94" />
+<img width="1919" height="1079" alt="Screenshot 2026-05-19 164948" src="https://github.com/user-attachments/assets/372f2246-a6f0-4f62-9a17-cba6e2ebdc00" />
+<img width="1919" height="1079" alt="Screenshot 2026-05-19 165218" src="https://github.com/user-attachments/assets/83bcb66c-3a0c-4d9a-9636-35240c59e8a9" />
+
+
+
+
+
