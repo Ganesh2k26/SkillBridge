@@ -1,5 +1,6 @@
 package com.ganesh.skillbridge.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,6 +36,7 @@ public class Company {
     @Builder.Default
     private Integer questionCount = 0;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<Question> questions;
 }
