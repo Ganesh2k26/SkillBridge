@@ -377,6 +377,28 @@ Reduces boilerplate, maps entity relationships (`@ManyToOne`, etc.), supports cu
 
 ---
 
+## Free Deployment
+
+The project is now prepared for free hosting with:
+
+- Frontend on GitHub Pages via the workflow in [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml)
+- Backend on Render using [render.yaml](render.yaml)
+
+### Deployment steps
+
+1. Push these changes to GitHub.
+2. In the GitHub repository, enable GitHub Pages from the Settings tab.
+3. Create a Render web service from the repository and let it deploy the backend.
+4. Update the frontend API URL in the workflow or repository variable named `VITE_API_URL` to your Render backend URL.
+
+Example backend URL format:
+
+```text
+https://your-app-name.onrender.com/api
+```
+
+---
+
 ## Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
